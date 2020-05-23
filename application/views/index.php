@@ -37,6 +37,7 @@
 						<td class="date_created"><?= $book->date_created ?></td>
 						<td class="date_updated"><?= $book->date_updated ?></td>
 						<td>
+							<button class="btn btn-primary view_book" data-id="<?= $book->id ?>" data-toggle='modal' data-target='#viewModel'>Details</button>
 							<button class="btn btn-primary edit_book" data-id="<?= $book->id ?>" data-toggle='modal' data-target='#editModel'><i class="glyphicon glyphicon-pencil"></i></button>
 							<button class="btn btn-danger delete_book" data-id="<?= $book->id ?>" data-toggle="modal" data-target="#deleteModel"><i class="glyphicon glyphicon-trash"></i></button>
 						</td>
@@ -138,6 +139,44 @@
 	</div>
 </div>
 
+
+<!-- view Book Modal -->
+<div class="modal fade" id="viewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">
+					View Details
+				</h4>
+			</div>
+
+			<!-- Modal Body -->
+			<div class="modal-body">
+				<form role="form" id="viewBookForm">
+					<div class="form-group">
+						<label for="title">Name</label>
+						<input type="text" disabled class="form-control" id="n_book_title" name="title" placeholder="Book Title"/>
+					</div>
+					<div class="form-group">
+						<label for="author">Author</label>
+						<input class="form-control" disabled id="n_book_author" name="author" placeholder="Book Author" />
+					</div>
+					<input type="hidden" id="n_book_id" name="book_id">
+				</form>
+				<div id="message1">
+				</div>
+			</div>
+			<!-- Modal Footer -->
+		</div>
+	</div>
+</div>
+
+
 <!-- Delete Book Modal -->
 <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -176,16 +215,10 @@
 <script>
 
 	$(function(){
-
 		/* The following function inserts a new book on click */
 		$('#create_book').on('click', function(e){
 			e.preventDefault();
-
 			var formData = $("#bookForm").serialize();
-			/*var formData = new FormData();
-			var imgFile = $("#cover")[0]; // change your delector here
-			formData.append("data", $("#bookForm").serialize());
-			formData.append("cover_photo", imgFile.files[0]);*/ // change filename field here
 			$.ajax({
 				type: 'post',
 				url: 'crud/create_book',
@@ -203,8 +236,6 @@
 			}, function(){
 				alert('Sorry! Some Error Occured');
 			});
-
-			//uploadImage();
 		});
 
 		$('#tableBody').on('click', '.edit_book', function(e){
@@ -215,6 +246,16 @@
 			$("#editBookForm").find('#m_book_id').val(rowId);
 			$("#editBookForm").find('#m_book_title').val(title);
 			$("#editBookForm").find('#m_book_author').val(author);
+		});
+
+		$('#tableBody').on('click', '.view_book', function(e){
+			e.preventDefault();
+			var rowId = $(this).attr('data-id');
+			var title = $('#book_'+rowId).find('.book_title').text();
+			var author = $('#book_'+rowId).find('.book_author').text();
+			$("#viewBookForm").find('#n_book_id').val(rowId);
+			$("#viewBookForm").find('#n_book_title').val(title);
+			$("#viewBookForm").find('#n_book_author').val(author);
 		});
 
 		/* The following function Updates the Selected book */
