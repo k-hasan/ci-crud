@@ -68,7 +68,7 @@
 				<form role="form" id="bookForm" enctype="multipart/form-data" method="post">
 					<div class="form-group">
 						<label for="name">Name</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Task Name"/>
+						<input type="text" class="form-control" id="name" name="name" placeholder="Book Name"/>
 					</div>
 					<div class="form-group">
 						<label for="author">Author</label>
@@ -319,6 +319,7 @@
 					"<td class='date_created'>"+message.date_created+"</td>",
 					"<td class='date_updated'>"+message.date_updated+"</td>",
 					"<td>",
+					"<button class='btn btn-primary view_book' data-id='"+message.id+"' data-toggle='modal' data-target='#viewModel'>Details</button>&nbsp;" +
 					"<button class='btn btn-primary edit_book' data-id='"+message.id+"' data-toggle='modal' data-target='#editModel'><i class='glyphicon glyphicon-pencil'></i></button>&nbsp;",
 					"<button class='btn btn-danger delete_book' data-id='"+message.id+"' data-toggle='modal' data-target='#deleteModel'><i class='glyphicon glyphicon-trash'></i></button>",
 					"</td>",
