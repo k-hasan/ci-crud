@@ -6,10 +6,10 @@ class Book_model extends CI_Model {
 
         public $title;
         public $author;
-        //public $path;
+       
         public $date_created;
         public $date_updated;
-
+        /* hi */
         public function get_books()
         {
                 $query = $this->db->get('books');
